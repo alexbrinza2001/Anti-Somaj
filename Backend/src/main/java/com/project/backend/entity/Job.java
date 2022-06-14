@@ -12,6 +12,8 @@ public class Job {
 
     private String name;
     private String description;
+    private Integer salary;
+    private Integer experience;
     private Integer employerId;
 
     public String getName() {
@@ -28,6 +30,22 @@ public class Job {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 
     public Integer getEmployerId() {
