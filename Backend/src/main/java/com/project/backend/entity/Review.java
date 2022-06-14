@@ -17,20 +17,28 @@ public class Review {
     private Integer freelancerId;
 
 
-    public String getDescriere() {
-        return descriere;
+    public Integer getReviewId() {
+        return reviewId;
     }
 
-    public void setDescriere(String descriere) {
-        this.descriere = descriere;
+    public void setReviewId(Integer reviewId) {
+        this.reviewId = reviewId;
     }
 
-    public String getTitlu() {
-        return titlu;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTitlu(String titlu) {
-        this.titlu = titlu;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getRating() {

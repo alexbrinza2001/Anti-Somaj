@@ -5,7 +5,7 @@ import com.project.backend.entity.Job;
 
 public class JobConverter {
 
-    public Job dtoToEntity(JobDto JobDto) {
+    public Job dtoToEntity(JobDto jobDto) {
         Job job = new Job();
 
         job.setName(jobDto.getName());
