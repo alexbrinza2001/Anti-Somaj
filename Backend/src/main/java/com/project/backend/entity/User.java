@@ -1,6 +1,10 @@
 package com.project.backend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "user")
@@ -16,6 +20,9 @@ public class User {
     private String password;
     private Integer employerId;
     private Integer freelancerId;
+
+    @ManyToMany(fetch = EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 
     public Integer getUserId() {
@@ -72,5 +79,13 @@ public class User {
 
     public void setFreelancerId(Integer freelancerId) {
         this.freelancerId = freelancerId;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }
