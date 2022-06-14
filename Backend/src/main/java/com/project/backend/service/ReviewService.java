@@ -30,22 +30,8 @@ public class ReviewService {
 
     public void addReview(ReviewDto reviewDto) {
         ReviewConverter reviewConverter = new ReviewConverter();
-        FreelancerConverter freelancerConverter = new FreelancerConverter();
-        EmployerConverter employerConverter = new EmployerConverter();
 
-        String employerName = reviewDto.getEmployer().getName();
-        employerRepository.save(employerConverter.dtoToEntity(reviewDto.getEmployer()));
-        Employer employer = employerRepository.findByNameIs(employerName).get(0);
-
-        String freelancerDescription = reviewDto.getFreelancer().getDescription();
-        freelancerRepository.save(freelancerConverter.dtoToEntity(reviewDto.getFreelancer()));
-        Freelancer freelancer = freelancerRepository.findByDescriptionIs(freelancerDescription).get(0);
-
-        Review Review = reviewConverter.dtoToEntity(reviewDto);
-        Review.setEmployerId(employer.getEmployerId());
-        Review.setFreelancerId(freelancer.getFreelancerId());
-
-        reviewRepository.save(Review);
+        reviewRepository.save(reviewConverter.dtoToEntity(reviewDto));
     }
 
     public List<ReviewDto> getReviews() {
@@ -54,12 +40,10 @@ public class ReviewService {
         FreelancerConverter freelancerConverter = new FreelancerConverter();
 
         List<Review> reviewList = reviewRepository.findAll();
-        List<ReviewDto> reviews = new ArrayList<reviewDto>();
+        List<ReviewDto> reviews = new ArrayList<ReviewDto>();
 
         for (Review Review : reviewList) {
             ReviewDto reviewDto = reviewConverter.entityToDto(Review);
-            reviewDto.setEmployer(employerConverter.entityToDto(employerRepository.getById(Review.getEmployerId())));
-            reviewDto.setFreelancer(freelancerConverter.entityToDto(freelancerRepository.getById(Review.getFreelancerId())));
 
             reviews.add(reviewDto);
         }

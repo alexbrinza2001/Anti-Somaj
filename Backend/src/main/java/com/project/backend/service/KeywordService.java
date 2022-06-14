@@ -24,28 +24,19 @@ public class KeywordService {
 
     public void addKeyword(KeywordDto keywordDto) {
         KeywordConverter keywordConverter = new KeywordConverter();
-        JobConverter jobConverter = new JobConverter();
 
-        String jobName = keywordDto.getJob().getName();
-        jobRepository.save(jobConverter.dtoToEntity(keywordDto.getJob()));
-        Job job = jobRepository.findByNameIs(jobName).get(0);
-
-        Keyword Keyword = keywordConverter.dtoToEntity(keywordDto);
-        Keyword.setJobId(job.getJobId());
-
-        keywordRepository.save(Keyword);
+        keywordRepository.save(keywordConverter.dtoToEntity(keywordDto));
     }
 
     public List<KeywordDto> getKeywords() {
         KeywordConverter keywordConverter = new KeywordConverter();
-        JobConverter jobConverter = new JobConverter();
+
 
         List<Keyword> keywordList = keywordRepository.findAll();
-        List<KeywordDto> keywords = new ArrayList<keywordDto>();
+        List<KeywordDto> keywords = new ArrayList<KeywordDto>();
 
         for (Keyword Keyword : keywordList) {
             KeywordDto keywordDto = keywordConverter.entityToDto(Keyword);
-            keywordDto.setJob(jobConverter.entityToDto(jobRepository.getById(Keyword.getJobId())));
 
             keywords.add(keywordDto);
         }

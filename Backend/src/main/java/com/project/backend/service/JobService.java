@@ -28,7 +28,7 @@ public class JobService {
         JobConverter jobConverter = new JobConverter();
 
         List<Job> jobList = jobRepository.findAll();
-        List<JobDto> jobs = new ArrayList<jobDto>();
+        List<JobDto> jobs = new ArrayList<JobDto>();
 
         for (Job Job : jobList) {
             JobDto jobDto = jobConverter.entityToDto(Job);

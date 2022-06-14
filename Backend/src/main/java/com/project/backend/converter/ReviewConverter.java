@@ -20,7 +20,7 @@ public class ReviewConverter {
         FreelancerConverter freelancerConverter = new FreelancerConverter();
         EmployerConverter employerConverter = new EmployerConverter();
 
-        reviewDto.setEmail(review.getEmail());
+        reviewDto.setDescription(review.getDescription());
         reviewDto.setTitle(review.getTitle());
         reviewDto.setRating(review.getRating());
 
