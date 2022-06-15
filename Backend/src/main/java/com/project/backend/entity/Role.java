@@ -17,15 +17,16 @@ import static javax.persistence.GenerationType.AUTO;
 public class Role {
     @Id
     @GeneratedValue(strategy = AUTO)
-    private Long id;
+    private Long roleId;
     private String name;
+    private Integer userId;
 
-    public Long getId() {
-        return id;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getName() {
@@ -34,5 +35,13 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

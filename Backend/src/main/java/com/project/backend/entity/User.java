@@ -25,19 +25,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String password;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "freelancer_id")
-    private Freelancer freelancer;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employer_id")
-    private Employer employer;
-
-    @ManyToMany(fetch = EAGER)
-    private Collection<Role> roles = new ArrayList<>();
-    private Integer employerId;
     private Integer freelancerId;
+    private Integer employerId;
 
     public Integer getUserId() {
         return userId;
@@ -79,22 +68,6 @@ public class User {
         this.password = password;
     }
 
-    public Freelancer getFreelancer() {
-        return freelancer;
-    }
-
-    public void setFreelancer(Freelancer freelancer) {
-        this.freelancer = freelancer;
-    }
-
-    public Employer getEmployer() {
-        return employer;
-    }
-
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
-    }
-
     public Integer getEmployerId() {
         return employerId;
     }
@@ -109,14 +82,5 @@ public class User {
 
     public void setFreelancerId(Integer freelancerId) {
         this.freelancerId = freelancerId;
-    }
-
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
     }
 }
