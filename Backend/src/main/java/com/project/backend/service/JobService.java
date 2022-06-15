@@ -16,6 +16,8 @@ public class JobService {
     @Autowired
     JobRepo jobRepository;
 
+    JobConverter jobConverter = new JobConverter();
+
 
     public void addJob(JobDto jobDto) {
         JobConverter jobConverter = new JobConverter();
@@ -39,4 +41,11 @@ public class JobService {
         return jobs;
     }
 
+    public JobDto getJob(Integer jobId) {
+        return jobConverter.entityToDto(jobRepository.getById(jobId));
+    }
+
+    public void deleteJob(JobDto jobDto) {
+        jobRepository.delete(jobConverter.dtoToEntity(jobDto));
+    }
 }

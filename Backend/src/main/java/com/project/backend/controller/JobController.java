@@ -4,10 +4,7 @@ import com.project.backend.dto.JobDto;
 import com.project.backend.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,13 @@ public class JobController {
 
         return ResponseEntity.ok(jobList);
     }
-
+    @DeleteMapping("/deleteJob/{jobId}")
+    public Boolean deleteJob(@PathVariable(value = "id") Integer jobId){
+        JobDto jobDto = jobService.getJob(jobId);
+        if(jobDto == null){
+            return false;
+        }
+        jobService.deleteJob(jobDto);
+        return true;
+    }
 }
