@@ -1,9 +1,7 @@
 package com.project.backend.service;
 
-import com.project.backend.converter.JobConverter;
 import com.project.backend.converter.KeywordConverter;
 import com.project.backend.dto.KeywordDto;
-import com.project.backend.entity.Job;
 import com.project.backend.entity.Keyword;
 import com.project.backend.repo.JobRepo;
 import com.project.backend.repo.KeywordRepo;

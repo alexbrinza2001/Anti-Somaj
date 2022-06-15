@@ -4,8 +4,6 @@ import com.project.backend.converter.EmployerConverter;
 import com.project.backend.converter.FreelancerConverter;
 import com.project.backend.converter.ReviewConverter;
 import com.project.backend.dto.ReviewDto;
-import com.project.backend.entity.Employer;
-import com.project.backend.entity.Freelancer;
 import com.project.backend.entity.Review;
 import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
