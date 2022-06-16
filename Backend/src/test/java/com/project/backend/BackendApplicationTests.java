@@ -56,6 +56,7 @@ class BackendApplicationTests {
     }
 
     @Test
+    @Transactional
     void checkPasswordTooShort() throws Exception {
 
         User user = new User();
@@ -103,6 +104,7 @@ class BackendApplicationTests {
     }
 
     @Test
+    @Transactional
     void checkNameContainsNumber() throws Exception {
 
         Employer employer = new Employer();
@@ -116,6 +118,7 @@ class BackendApplicationTests {
     }
 
     @Test
+    @Transactional
     void checkRatingValue() throws Exception {
 
         Review review = new Review();
