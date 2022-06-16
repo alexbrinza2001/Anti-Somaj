@@ -3,6 +3,7 @@ package com.project.backend.controller;
 import com.project.backend.dto.JobDto;
 import com.project.backend.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +28,18 @@ public class JobController {
 
         return ResponseEntity.ok(jobList);
     }
-    @DeleteMapping("/deleteJob/{jobId}")
-    public Boolean deleteJob(@PathVariable(value = "id") Integer jobId){
+
+    @DeleteMapping("/job")
+    @ResponseBody
+    public ResponseEntity<JobDto> deleteJob(@RequestParam(value = "id") Integer jobId){
         JobDto jobDto = jobService.getJob(jobId);
-        if(jobDto == null){
-            return false;
+
+        if (jobDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         jobService.deleteJob(jobDto);
-        return true;
+
+        return ResponseEntity.ok(jobDto);
     }
 }
