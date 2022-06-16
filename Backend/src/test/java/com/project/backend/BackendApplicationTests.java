@@ -2,9 +2,11 @@ package com.project.backend;
 
 import com.project.backend.entity.Employer;
 import com.project.backend.entity.Freelancer;
+import com.project.backend.entity.Review;
 import com.project.backend.entity.User;
 import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
+import com.project.backend.repo.ReviewRepo;
 import com.project.backend.repo.UserRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -37,6 +39,9 @@ class BackendApplicationTests {
 
     @MockBean
     private EmployerRepo employerRepo;
+
+    @MockBean
+    private ReviewRepo reviewRepo;
 
     @Test
     @Transactional
@@ -108,6 +113,19 @@ class BackendApplicationTests {
         Mockito.when(employerRepo.findAll()).thenReturn(employerList);
 
         mockMvc.perform(get("/employers")).andExpect(status().isExpectationFailed());
+    }
+
+    @Test
+    void checkRatingValue() throws Exception {
+
+        Review review = new Review();
+        List <Review> reviewList = new ArrayList<>();
+        review.setRating(123);
+        reviewList.add(review);
+
+        Mockito.when(reviewRepo.findAll()).thenReturn(reviewList);
+
+        mockMvc.perform(get("/reviews")).andExpect(status().isExpectationFailed());
     }
 
 }
