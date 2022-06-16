@@ -3,11 +3,9 @@ package com.project.backend.controller;
 import com.project.backend.dto.UserDto;
 import com.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +26,26 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getUsers() {
         List<UserDto> userList = userService.getUsers();
 
+        if (userList.size() == 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        for (UserDto user : userList) {
+            if (user.getPassword().length() < 10)
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+
         return ResponseEntity.ok(userList);
+    }
+
+    @GetMapping("/user")
+    @ResponseBody
+    public ResponseEntity<UserDto> getUserById(@RequestParam(name = "id") Integer id) {
+        UserDto userDto = userService.getUserById(id);
+
+        if (userDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(userDto);
     }
 
 }

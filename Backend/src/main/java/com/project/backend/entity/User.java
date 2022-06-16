@@ -1,16 +1,8 @@
 package com.project.backend.entity;
 
-import com.project.backend.entity.Employer;
-import com.project.backend.entity.Freelancer;
-import com.project.backend.entity.Role;
 import lombok.Data;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Data

@@ -1,7 +1,5 @@
 package com.project.backend.service;
 
-import com.project.backend.converter.EmployerConverter;
-import com.project.backend.converter.FreelancerConverter;
 import com.project.backend.converter.ReviewConverter;
 import com.project.backend.dto.ReviewDto;
 import com.project.backend.entity.Review;
@@ -34,8 +32,6 @@ public class ReviewService {
 
     public List<ReviewDto> getReviews() {
         ReviewConverter reviewConverter = new ReviewConverter();
-        EmployerConverter employerConverter = new EmployerConverter();
-        FreelancerConverter freelancerConverter = new FreelancerConverter();
 
         List<Review> reviewList = reviewRepository.findAll();
         List<ReviewDto> reviews = new ArrayList<ReviewDto>();

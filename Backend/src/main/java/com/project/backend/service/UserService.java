@@ -11,20 +11,13 @@ import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
 import com.project.backend.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     @Autowired
     UserRepo userRepository;
@@ -65,8 +58,12 @@ public class UserService implements UserDetailsService {
 
         for (User user : userList) {
             UserDto userDto = userConverter.entityToDto(user);
-            userDto.setEmployer(employerConverter.entityToDto(employerRepository.getById(user.getEmployerId())));
-            userDto.setFreelancer(freelancerConverter.entityToDto(freelancerRepository.getById(user.getFreelancerId())));
+            try {
+                userDto.setEmployer(employerConverter.entityToDto(employerRepository.getById(user.getEmployerId())));
+                userDto.setFreelancer(freelancerConverter.entityToDto(freelancerRepository.getById(user.getFreelancerId())));
+            } catch (Exception ignored) {
+
+            };
 
             users.add(userDto);
         }
@@ -74,15 +71,14 @@ public class UserService implements UserDetailsService {
         return users;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
-        if(user == null){
-            throw new UsernameNotFoundException("User not found in database");
-        }
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+    public UserDto getUserById(Integer userId) {
+        UserConverter userConverter = new UserConverter();
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        try {
+            return userConverter.entityToDto(userRepository.getById(userId));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

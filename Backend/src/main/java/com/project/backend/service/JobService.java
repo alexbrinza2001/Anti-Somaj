@@ -42,7 +42,13 @@ public class JobService {
     }
 
     public JobDto getJob(Integer jobId) {
-        return jobConverter.entityToDto(jobRepository.getById(jobId));
+
+        try {
+            return jobConverter.entityToDto(jobRepository.getById(jobId));
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     public void deleteJob(JobDto jobDto) {

@@ -16,6 +16,14 @@ public class Job {
     private Integer experience;
     private Integer employerId;
 
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
+
     public String getName() {
         return name;
     }
