@@ -47,7 +47,7 @@ class BackendApplicationTests {
     @Transactional
     void testErrorWhenGetUsersEndpointIsNull() throws Exception {
 
-        List<User> userList = new ArrayList<User>();
+        List<User> userList = new ArrayList<>();
 
         Mockito.when(userRepository.findAll()).thenReturn(userList);
 

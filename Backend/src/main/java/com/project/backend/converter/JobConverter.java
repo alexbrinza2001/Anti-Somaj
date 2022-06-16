@@ -9,6 +9,11 @@ public class JobConverter {
         Job job = new Job();
 
         job.setName(jobDto.getName());
+        job.setCategory(jobDto.getCategory());
+        job.setDescription(jobDto.getDescription());
+        job.setExperience(jobDto.getExperience());
+        job.setSalary(jobDto.getSalary());
+        job.setEmployerId(jobDto.getEmployerId());
 
         return job;
     }
@@ -18,6 +23,11 @@ public class JobConverter {
         JobConverter jobConverter = new JobConverter();
 
         jobDto.setName(job.getName());
+        jobDto.setCategory(job.getCategory());
+        jobDto.setDescription(job.getDescription());
+        jobDto.setExperience(job.getExperience());
+        jobDto.setSalary(job.getSalary());
+        jobDto.setEmployerId(job.getEmployerId());
 
         return jobDto;
     }

@@ -15,6 +15,7 @@ public class Job {
     private Integer salary;
     private Integer experience;
     private Integer employerId;
+    private String category;
 
     public Integer getJobId() {
         return jobId;
@@ -62,5 +63,13 @@ public class Job {
 
     public void setEmployerId(Integer employerId) {
         this.employerId = employerId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

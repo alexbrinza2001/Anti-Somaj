@@ -6,6 +6,8 @@ public class JobDto {
     private String description;
     private Integer experience;
     private Integer employerId;
+    private String category;
+    private Integer salary;
 
     public String getName() {
         return name;
@@ -37,5 +39,21 @@ public class JobDto {
 
     public void setEmployerId(Integer employerId) {
         this.employerId = employerId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
     }
 }
