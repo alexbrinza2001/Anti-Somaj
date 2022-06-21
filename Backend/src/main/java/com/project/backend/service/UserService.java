@@ -9,15 +9,24 @@ import com.project.backend.entity.Freelancer;
 import com.project.backend.entity.User;
 import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
+import com.project.backend.repo.RoleRepo;
 import com.project.backend.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService {
+@Component
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepository;
@@ -27,6 +36,9 @@ public class UserService {
 
     @Autowired
     FreelancerRepo freelancerRepository;
+
+    @Autowired
+    RoleRepo roleRepo;
 
     public void addUser(UserDto userDto) {
         UserConverter userConverter = new UserConverter();
@@ -79,6 +91,19 @@ public class UserService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+        if(user == null){
+            throw new UsernameNotFoundException("User not found in database");
+        }
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
 }
