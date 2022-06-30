@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Data
+@Table(name = "role")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {

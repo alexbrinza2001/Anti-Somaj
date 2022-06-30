@@ -4,6 +4,7 @@ import com.project.backend.dto.RoleDto;
 import com.project.backend.dto.UserDto;
 import com.project.backend.entity.Role;
 import com.project.backend.entity.User;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;

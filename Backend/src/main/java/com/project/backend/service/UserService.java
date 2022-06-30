@@ -2,10 +2,13 @@ package com.project.backend.service;
 
 import com.project.backend.converter.EmployerConverter;
 import com.project.backend.converter.FreelancerConverter;
+import com.project.backend.converter.RoleConverter;
 import com.project.backend.converter.UserConverter;
+import com.project.backend.dto.RoleDto;
 import com.project.backend.dto.UserDto;
 import com.project.backend.entity.Employer;
 import com.project.backend.entity.Freelancer;
+import com.project.backend.entity.Role;
 import com.project.backend.entity.User;
 import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
@@ -17,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +44,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     RoleRepo roleRepo;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public void addUser(UserDto userDto) {
         UserConverter userConverter = new UserConverter();
         FreelancerConverter freelancerConverter = new FreelancerConverter();
@@ -54,6 +61,7 @@ public class UserService implements UserDetailsService {
         Freelancer freelancer = freelancerRepository.findByDescriptionIs(freelancerDescription).get(0);
 
         User user = userConverter.dtoToEntity(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEmployerId(employer.getEmployerId());
         user.setFreelancerId(freelancer.getFreelancerId());
 
@@ -106,4 +114,13 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
+    public void saveRole(Role role) {
+        roleRepo.save(role);
+    }
+
+    public void addRoleToUser(String email, String rolename) {
+        User user = userRepository.findByEmail(email);
+        Role role = roleRepo.findByName(rolename);
+        user.addRole(role);
+    }
 }

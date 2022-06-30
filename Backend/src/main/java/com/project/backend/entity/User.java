@@ -25,7 +25,7 @@ public class User {
     private Integer freelancerId;
     private Integer employerId;
 
-    @ManyToMany(fetch = EAGER)
+    @ManyToMany(fetch = EAGER, cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
     public Collection<Role> getRoles() {
@@ -90,5 +90,9 @@ public class User {
 
     public void setFreelancerId(Integer freelancerId) {
         this.freelancerId = freelancerId;
+    }
+
+    public void addRole(Role role){
+        roles.add(role);
     }
 }

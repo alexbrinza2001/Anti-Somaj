@@ -1,7 +1,11 @@
 package com.project.backend.dto;
 
-import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
 
     private String email;

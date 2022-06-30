@@ -1,5 +1,6 @@
 package com.project.backend;
 
+import com.project.backend.dto.RoleDto;
 import com.project.backend.dto.UserDto;
 import com.project.backend.entity.Role;
 import com.project.backend.entity.User;
@@ -9,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
@@ -23,22 +26,21 @@ public class BackendApplication {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     CommandLineRunner run(UserService userService) {
         return args -> {
             userService.saveRole(new Role(null, "ROLE_USER"));
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
 
-            userService.addUser(new UserDto(null, "John Travolta", "john", "1234", new ArrayList<>()));
-            userService.saveUser(new User(null, "Will Smith", "will", "1234", new ArrayList<>()));
-            userService.saveUser(new User(null, "Jim Carry", "jim", "1234", new ArrayList<>()));
-            userService.saveUser(new User(null, "Arnold Schwarzenegger", "arnold", "1234", new ArrayList<>()));
+            userService.addUser(new UserDto("cristi@gmail.com", "cristi", "baluta", "parola", new ArrayList<>(), null, null));
+            userService.addUser(new UserDto("mihaita@gmail.com", "mihaita", "dragan", "parola2", new ArrayList<>(), null, null));
 
-            userService.addRoleToUser("john", "ROLE_USER");
-            userService.addRoleToUser("will", "ROLE_MANAGER");
-            userService.addRoleToUser("jim", "ROLE_ADMIN");
-            userService.addRoleToUser("arnold", "ROLE_SUPER_ADMIN");
-            userService.addRoleToUser("arnold", "ROLE_ADMIN");
-            userService.addRoleToUser("arnold", "ROLE_USER");
+            userService.addRoleToUser("cristi@gmail.com", "ROLE_ADMIN");
+            userService.addRoleToUser("mihaita@gmail.com", "ROLE_USER");
         };
     }
 }
