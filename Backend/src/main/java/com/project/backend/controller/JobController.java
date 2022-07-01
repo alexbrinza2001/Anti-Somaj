@@ -22,6 +22,7 @@ public class JobController {
     ResourceAccessService resourceAccessService;
 
     @PostMapping("/job")
+    @Secured("ROLE_COMPANY")
     public ResponseEntity<JobDto> addJob(@RequestBody JobDto jobDto) {
         jobService.addJob(jobDto);
 
