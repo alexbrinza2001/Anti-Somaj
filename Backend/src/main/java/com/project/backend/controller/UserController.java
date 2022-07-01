@@ -18,7 +18,6 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         userService.addUser(userDto);
-
         return ResponseEntity.ok(userDto);
     }
 
