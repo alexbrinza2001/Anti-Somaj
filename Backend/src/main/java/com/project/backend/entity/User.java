@@ -4,6 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static javax.persistence.FetchType.EAGER;
+
 @Entity
 @Data
 @Table(name = "user")
@@ -19,6 +24,17 @@ public class User {
     private String password;
     private Integer freelancerId;
     private Integer employerId;
+
+    @ManyToMany(fetch = EAGER, cascade = CascadeType.ALL)
+    private Collection<Role> roles = new ArrayList<>();
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -74,5 +90,9 @@ public class User {
 
     public void setFreelancerId(Integer freelancerId) {
         this.freelancerId = freelancerId;
+    }
+
+    public void addRole(Role role){
+        roles.add(role);
     }
 }

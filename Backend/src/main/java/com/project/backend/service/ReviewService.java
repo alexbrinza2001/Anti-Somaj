@@ -1,6 +1,7 @@
 package com.project.backend.service;
 
 import com.project.backend.converter.ReviewConverter;
+import com.project.backend.dto.JobDto;
 import com.project.backend.dto.ReviewDto;
 import com.project.backend.entity.Review;
 import com.project.backend.repo.EmployerRepo;
@@ -24,6 +25,9 @@ public class ReviewService {
     @Autowired
     FreelancerRepo freelancerRepository;
 
+    ReviewConverter reviewConverter = new ReviewConverter();
+
+
     public void addReview(ReviewDto reviewDto) {
         ReviewConverter reviewConverter = new ReviewConverter();
 
@@ -45,4 +49,15 @@ public class ReviewService {
         return reviews;
     }
 
+    public ReviewDto getReview(Integer id){
+        try {
+            return reviewConverter.entityToDto(reviewRepository.getById(id));
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    public void deleteReview(ReviewDto reviewDto) {
+        reviewRepository.delete(reviewConverter.dtoToEntity(reviewDto));
+    }
 }

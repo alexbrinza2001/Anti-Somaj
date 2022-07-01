@@ -2,22 +2,35 @@ package com.project.backend.service;
 
 import com.project.backend.converter.EmployerConverter;
 import com.project.backend.converter.FreelancerConverter;
+import com.project.backend.converter.RoleConverter;
 import com.project.backend.converter.UserConverter;
+import com.project.backend.dto.RoleDto;
 import com.project.backend.dto.UserDto;
 import com.project.backend.entity.Employer;
 import com.project.backend.entity.Freelancer;
+import com.project.backend.entity.Role;
 import com.project.backend.entity.User;
 import com.project.backend.repo.EmployerRepo;
 import com.project.backend.repo.FreelancerRepo;
+import com.project.backend.repo.RoleRepo;
 import com.project.backend.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService {
+@Component
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepository;
@@ -27,6 +40,12 @@ public class UserService {
 
     @Autowired
     FreelancerRepo freelancerRepository;
+
+    @Autowired
+    RoleRepo roleRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public void addUser(UserDto userDto) {
         UserConverter userConverter = new UserConverter();
@@ -42,6 +61,7 @@ public class UserService {
         Freelancer freelancer = freelancerRepository.findByDescriptionIs(freelancerDescription).get(0);
 
         User user = userConverter.dtoToEntity(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEmployerId(employer.getEmployerId());
         user.setFreelancerId(freelancer.getFreelancerId());
 
@@ -81,4 +101,26 @@ public class UserService {
         }
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+        if(user == null){
+            throw new UsernameNotFoundException("User not found in database");
+        }
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    public void saveRole(Role role) {
+        roleRepo.save(role);
+    }
+
+    public void addRoleToUser(String email, String rolename) {
+        User user = userRepository.findByEmail(email);
+        Role role = roleRepo.findByName(rolename);
+        user.addRole(role);
+    }
 }

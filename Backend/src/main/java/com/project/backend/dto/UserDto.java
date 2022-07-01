@@ -1,11 +1,18 @@
 package com.project.backend.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
 
     private String email;
     private String firstName;
     private String lastName;
     private String password;
+    private Collection<RoleDto> roles;
     private FreelancerDto freelancer;
     private EmployerDto employer;
 
@@ -55,5 +62,17 @@ public class UserDto {
 
     public void setEmployer(EmployerDto employer) {
         this.employer = employer;
+    }
+
+    public void addRole(RoleDto role) {
+        this.roles.add(role);
+    }
+
+    public Collection<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<RoleDto> roles) {
+        this.roles = roles;
     }
 }
