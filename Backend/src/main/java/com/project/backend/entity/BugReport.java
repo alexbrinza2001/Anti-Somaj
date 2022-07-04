@@ -8,6 +8,7 @@ public class BugReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer bugId;
 
     private String bug;
 

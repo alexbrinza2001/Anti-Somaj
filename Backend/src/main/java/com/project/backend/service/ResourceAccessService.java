@@ -25,7 +25,7 @@ public class ResourceAccessService {
         String email = authentication.getName();
         User user = userRepo.findByEmail(email);
         Job job = jobRepo.getById(id);
-        if(job.getEmployerId() == id){
+        if(job.getEmployerId() == user.getEmployerId()){
             return true;
         }
         return false;

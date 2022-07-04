@@ -28,8 +28,7 @@ public class UserController {
         if (userList.size() == 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         for (UserDto user : userList) {
-            if (user.getPassword().length() < 10)
-                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            user.setPassword("null");
         }
 
         return ResponseEntity.ok(userList);
@@ -39,7 +38,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<UserDto> getUserById(@RequestParam(name = "id") Integer id) {
         UserDto userDto = userService.getUserById(id);
-
+        userDto.setPassword("null");
         if (userDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

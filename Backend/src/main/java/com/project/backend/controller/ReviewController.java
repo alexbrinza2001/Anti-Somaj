@@ -21,7 +21,7 @@ public class ReviewController {
     @Autowired
     ResourceAccessService resourceAccessService;
 
-    @Secured({"ROLE_FREELANCER", "ROLE_COMPANY", "ROLE_ADMIN"})
+    @Secured({"ROLE_USER", "ROLE_COMPANY", "ROLE_ADMIN"})
     @PostMapping("/review")
     public ResponseEntity<ReviewDto> addReview(@RequestBody ReviewDto reviewDto) {
         reviewService.addReview(reviewDto);
@@ -41,8 +41,8 @@ public class ReviewController {
 
         return ResponseEntity.ok(reviewList);
     }
-    @DeleteMapping("/review")
-    @Secured({"ROLE_FREELANCER", "ROLE_COMPANY", "ROLE_ADMIN"})
+    @DeleteMapping("/deleteReview")
+    @Secured({"ROLE_USER", "ROLE_COMPANY", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<ReviewDto> deleteReview(@RequestParam(value = "id") Integer reviewId, Authentication authentication){
         ReviewDto reviewDto = reviewService.getReview(reviewId);

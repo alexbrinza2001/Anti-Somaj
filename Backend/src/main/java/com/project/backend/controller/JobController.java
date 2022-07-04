@@ -36,7 +36,7 @@ public class JobController {
         return ResponseEntity.ok(jobList);
     }
 
-    @DeleteMapping("/job")
+    @DeleteMapping("/deleteJob")
     @Secured("ROLE_COMPANY")
     @ResponseBody
     public ResponseEntity<JobDto> deleteJob(@RequestParam(value = "id") Integer jobId, Authentication authentication){
@@ -45,6 +45,7 @@ public class JobController {
         if (jobDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        System.out.println(123);
         if(resourceAccessService.checkAccessJob(authentication, jobId)) {
             jobService.deleteJob(jobDto);
             return ResponseEntity.ok(jobDto);
