@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
         authenticationFilter.setFilterProcessesUrl("/login");
-        http.cors().and().csrf().disable();
+        http.csrf().disable();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/login/**", "/token/refresh/**").permitAll();
         //http.authorizeRequests().antMatchers(GET, "/user/**").hasAnyAuthority("ROLE_USER");
@@ -56,5 +57,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+//    @EnableWebSecurity
+//    public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.cors();
+//        }
+//    }
 
 }
